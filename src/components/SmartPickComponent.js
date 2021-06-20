@@ -101,33 +101,26 @@ function SmartPick(props) {
     }
 
     const displayProbability = () => {
-        //if (generated) {
-            return (
-                <AnimatedProgressProvider
-                    valueStart={0}
-                    valueEnd={probabilityOfSuccess}
-                    duration={0}
-                    easingFunction={easeQuadInOut}
-                >
-                {value => {
-                    const roundedValue = Math.round(value);
-                    return (
-                        <CircularProgressbarWithChildren value={value}
-                            //text={`${roundedValue}%`}
-                            /* This is important to include, because if you're fully managing the
-                            animation yourself, you'll want to disable the CSS animation. */
-                            //styles={buildStyles({ pathTransition: "none" })}
-                        >
-                            <div style={{ fontSize: 16, marginTop: -5, textAlign: "center" }}>
-                                <p>{t("probability_of_success")}</p>
-                                <h1 id="probability">{`${roundedValue}%`}</h1>
-                            </div>
-                        </CircularProgressbarWithChildren>
-                    );
-                }}
-                </AnimatedProgressProvider>
-            );
-        //}
+        return (
+            <AnimatedProgressProvider
+                valueStart={0}
+                valueEnd={probabilityOfSuccess}
+                duration={0}
+                easingFunction={easeQuadInOut}
+            >
+            {value => {
+                const roundedValue = Math.round(value);
+                return (
+                    <CircularProgressbarWithChildren value={value}>
+                        <div style={{ fontSize: 16, marginTop: -5, textAlign: "center" }}>
+                            <p>{t("probability_of_success")}</p>
+                            <h1 id="probability">{`${roundedValue}%`}</h1>
+                        </div>
+                    </CircularProgressbarWithChildren>
+                );
+            }}
+            </AnimatedProgressProvider>
+        );
     }
 
     return (
