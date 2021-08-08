@@ -101,26 +101,27 @@ function SmartPick(props) {
     }
 
     const displayProbability = () => {
-        return (
-            <AnimatedProgressProvider
-                valueStart={0}
-                valueEnd={probabilityOfSuccess}
-                duration={0}
-                easingFunction={easeQuadInOut}
-            >
-            {value => {
-                const roundedValue = Math.round(value);
-                return (
-                    <CircularProgressbarWithChildren value={value}>
-                        <div style={{ fontSize: 16, marginTop: -5, textAlign: "center" }}>
-                            <p>{t("probability_of_success")}</p>
-                            <h1 id="probability">{`${roundedValue}%`}</h1>
-                        </div>
-                    </CircularProgressbarWithChildren>
-                );
-            }}
-            </AnimatedProgressProvider>
-        );
+            return (
+                <AnimatedProgressProvider
+                    valueStart={0}
+                    valueEnd={probabilityOfSuccess}
+                    duration={0}
+                    easingFunction={easeQuadInOut}
+                >
+                {value => {
+                    const roundedValue = Math.round(value);
+                    return (
+                        <CircularProgressbarWithChildren value={value}
+                        >
+                            <div style={{ fontSize: 16, marginTop: -5, textAlign: "center" }}>
+                                <p>{t("probability_of_success")}</p>
+                                <h1 id="probability">{`${roundedValue}%`}</h1>
+                            </div>
+                        </CircularProgressbarWithChildren>
+                    );
+                }}
+                </AnimatedProgressProvider>
+            );
     }
 
     return (
@@ -142,8 +143,8 @@ function SmartPick(props) {
                 </div>
                 <div className="col-sm align-self-center selection-container">
                     <div className="selection-numbers-and-stars">
-                        <h5><img src='assets/images/ball.png' height="40" width="40" alt='Selected balls'/><span id="selection-numbers" className="selection-numbers">{displaySelection(selectedNumbers)}</span></h5>     
-                        <h5><img src='assets/images/star.jpg' height="40" width="40" alt='Selected stars'/><span id="selection-stars" className="selection-stars">{displaySelection(selectedStars)}</span></h5> 
+                        <h5><img src='assets/images/ball.png' height="40" width="40" alt='Selected balls'/><span id="selection-numbers" className="selection">{displaySelection(selectedNumbers)}</span></h5>     
+                        <h5><img src='assets/images/star.jpg' height="40" width="40" alt='Selected stars'/><span id="selection-stars" className="selection">{displaySelection(selectedStars)}</span></h5>
                     </div>
                     <button id="generate-button" className="generate-button" onClick={handleGenerate}>{t("generate")}</button>
                     <button id="reset-button" className="reset-button" onClick={handleReset}>{t("reset")}</button>

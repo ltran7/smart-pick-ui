@@ -1,0 +1,119 @@
+@import "colors";
+
+@mixin ball {
+  width: 40px;
+  height: 40px;
+}
+
+@mixin grid {
+  background-size: cover;
+  font-weight: bold;
+  height: 40px;
+  width: 40px;
+  border: none;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.basic-button {
+  color: $colorWhite;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  border: 5px solid $colorBlack;
+  border-radius: 12px;
+  height: 70px;
+  width: 200px;
+}
+
+.generate-button {
+  @extend .basic-button;
+  background-color: $colorGreen;
+}
+
+.reset-button {
+  @extend .basic-button;
+  background-color: $colorDarkRed;
+  margin-top: 15px;
+}
+
+.row-header {
+  margin: 0px auto;
+  padding: 0px auto;
+}
+
+.row-content {
+  margin: 0px auto;
+  padding: 50px 0px 50px 0px;
+  border-bottom: 1px ridge;
+  min-height: 400px;
+  margin-bottom: 100px;
+}
+
+.navbar-dark {
+  background-color: $colorBlack;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0%;
+  width: 100%; 
+  background-color: $colorBlack; 
+  color: $colorWhite;
+  font-size: 12px;
+}
+
+.ball {
+  @include ball;
+  color: $colorWhite;
+}
+
+.ball-selected {
+  @include ball;
+  color: $colorRed;
+}
+
+.grid-numbers button {
+  background: url("../images/ball.png") no-repeat scroll 0 0 transparent;
+  @include grid;
+}
+
+.grid-stars button {
+  background: url("../images/star.jpg") no-repeat scroll 0 0 transparent;
+  @include grid;
+}
+
+.grid-stars {
+  margin-top: 20px;
+}
+
+.language-select {
+  background-color: $colorWhite;
+  border-radius: 5px;
+}
+
+.mandatory {
+  color: $colorRed;
+  font-weight: bold;
+}
+
+.selection-numbers-and-stars {
+  margin-bottom: 20px;
+}
+
+.selection {
+  margin-left: 10px;
+  font-size: 22px;
+}
