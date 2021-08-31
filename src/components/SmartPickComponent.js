@@ -1,11 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import Grid from './GridComponent';
-import axios from 'axios';
+import Grid from '../components/GridComponent';
 import { useTranslation } from 'react-i18next';
-import { CircularProgressbarWithChildren }  from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import { easeQuadInOut } from 'd3-ease';
-import AnimatedProgressProvider from "./AnimatedProgressProviderComponent";
+import { sortSelection, computeProbability, generate } from '../scripts/SmartPick';
 
 function SmartPick(props) {
 
@@ -15,42 +11,6 @@ function SmartPick(props) {
     const [isClickedAction, setIsClickedAction] = useState(false);
 
     const { t } = useTranslation();
-
-    const handleGenerate = (isClicked) => {
-        let selectedBalls = [];
-        for (let i = 0; i < selectedNumbers.length; i++) {
-            selectedBalls.push({
-                "number": selectedNumbers[i], 
-                "type": "NUMBER"}
-            );
-        }
-        for (let i = 0; i < selectedStars.length; i++) {
-            selectedBalls.push({
-                "number": selectedStars[i], 
-                "type": "STAR"}
-            );
-        }
-
-        axios.post("http://localhost:8080/smart-pick/draw?nbOfNumbers=5&nbOfStars=2", selectedBalls)
-            .then(response => {
-                let generatedNumbers = [];
-                let generatedStars = [];
-                for (let i = 0; i < response.data.balls.length; i++) {
-                    if (response.data.balls[i].type === "NUMBER") {
-                        generatedNumbers.push(response.data.balls[i].number);
-                    } else {
-                        generatedStars.push(response.data.balls[i].number);
-                    }
-                }
-                setIsClickedAction(isClicked ? true : false);
-                setSelectedNumbers(generatedNumbers);
-                setSelectedStars(generatedStars);
-                setProbabilityOfSuccess(response.data.probability);
-            })
-            .catch(error => {
-                alert(t("an_unexpected_error_occurred_while_generating_the_numbers"));
-        });
-    }
 
     const handleReset = () => {
         setSelectedNumbers([]);
@@ -74,54 +34,10 @@ function SmartPick(props) {
                 setProbabilityOfSuccess(0);
             }
         }
-      },[selectedNumbers.length, selectedStars.length, isClickedAction]);
+    },[selectedNumbers.length, selectedStars.length, isClickedAction]);
 
-    const createGridOfNumbers = () => {
-        return (
-            <div>
-                <Grid numberOfRows={10} numberOfColumns={5} limit={50} selectionLimit={5} selection={selectedNumbers} onSelection={handleNumberSelection} type="number"/>
-            </div>
-        );
-    }
-    const createGridOfStars = () => {
-        return (
-            <div>
-                <Grid numberOfRows={3} numberOfColumns={5} limit={12} selectionLimit={2} selection={selectedStars} onSelection={handleStarSelection} type="star"/>
-            </div>    
-        );
-    }
-
-    const displaySelection = (selection) => {
-        if (selection.length >= 1) {
-            return selection
-            .sort((a, b) => a > b ? 1 : -1)
-            .map(t => <span>{t}</span>)
-            .reduce((previous, current) => [previous, ' - ', current])
-        }
-    }
-
-    const displayProbability = () => {
-            return (
-                <AnimatedProgressProvider
-                    valueStart={0}
-                    valueEnd={probabilityOfSuccess}
-                    duration={0}
-                    easingFunction={easeQuadInOut}
-                >
-                {value => {
-                    const roundedValue = Math.round(value);
-                    return (
-                        <CircularProgressbarWithChildren value={value}
-                        >
-                            <div style={{ fontSize: 16, marginTop: -5, textAlign: "center" }}>
-                                <p>{t("probability_of_success")}</p>
-                                <h1 id="probability">{`${roundedValue}%`}</h1>
-                            </div>
-                        </CircularProgressbarWithChildren>
-                    );
-                }}
-                </AnimatedProgressProvider>
-            );
+    const handleGenerate = (isClicked) => {
+        generate(selectedNumbers, selectedStars, isClicked, setIsClickedAction, setSelectedNumbers, setSelectedStars, setProbabilityOfSuccess, t("an_unexpected_error_occurred_while_generating_the_numbers"));
     }
 
     return (
@@ -135,22 +51,22 @@ function SmartPick(props) {
             <div className="row row-content">
                 <div className="col-sm grid-container">                      
                     <div className="grid-numbers">
-                        {createGridOfNumbers()}
+                        <Grid numberOfRows={10} numberOfColumns={5} limit={50} selectionLimit={5} selection={selectedNumbers} onSelection={handleNumberSelection} type={"number"}/>
                     </div>
                     <div className="grid-stars">
-                        {createGridOfStars()}
+                        <Grid numberOfRows={3} numberOfColumns={5} limit={12} selectionLimit={2} selection={selectedStars} onSelection={handleStarSelection} type={"star"}/>
                     </div>
                 </div>
                 <div className="col-sm align-self-center selection-container">
                     <div className="selection-numbers-and-stars">
-                        <h5><img src='assets/images/ball.png' height="40" width="40" alt='Selected balls'/><span id="selection-numbers" className="selection">{displaySelection(selectedNumbers)}</span></h5>     
-                        <h5><img src='assets/images/star.jpg' height="40" width="40" alt='Selected stars'/><span id="selection-stars" className="selection">{displaySelection(selectedStars)}</span></h5>
+                        <h5><img src='assets/images/ball.png' height="40" width="40" alt='Selected balls'/><span id="selection-numbers" className="selection numbers">{sortSelection(selectedNumbers)}</span></h5>     
+                        <h5><img src='assets/images/star.jpg' height="40" width="40" alt='Selected stars'/><span id="selection-stars" className="selection stars">{sortSelection(selectedStars)}</span></h5> 
                     </div>
                     <button id="generate-button" className="generate-button" onClick={handleGenerate}>{t("generate")}</button>
                     <button id="reset-button" className="reset-button" onClick={handleReset}>{t("reset")}</button>
                 </div>
                 <div className="col-sm align-self-center probability-container">
-                    {displayProbability()}
+                    {computeProbability(probabilityOfSuccess, t("probability_of_success"))}
                 </div>
             </div>   
         </div>

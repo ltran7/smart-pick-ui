@@ -14,9 +14,9 @@ class Main extends Component {
           <Header/>
           <Switch>
               <Route path='/home' component={Home} />
-              <Route exact path='/smartpick' component={SmartPick} />} />
-              <Route exact path='/contactus' component={Contact} />} />
-              <Route exact path='/aboutus' component={About} />} />
+              <Route exact path='/smartpick' component={SmartPick} />
+              <Route exact path='/contactus' component={Contact} />
+              <Route exact path='/aboutus' component={About} />
               <Redirect to="/home" />
           </Switch>
           <Footer/>

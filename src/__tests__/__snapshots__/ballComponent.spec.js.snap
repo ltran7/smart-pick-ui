@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ball component Non selected ball with id-1 and type-number 1`] = `
+<button
+  className="ball-selected"
+  id="1-number"
+  onClick={[Function]}
+>
+  1
+</button>
+`;
+
+exports[`Ball component Non selected ball with id-1 and type-star 1`] = `
+<button
+  className="ball-selected"
+  id="1-star"
+  onClick={[Function]}
+>
+  1
+</button>
+`;
+
+exports[`Ball component Selected ball with id-1 and type-number 1`] = `
+<button
+  className="ball-selected"
+  id="1-number"
+  onClick={[Function]}
+>
+  1
+</button>
+`;
+
+exports[`Ball component Selected ball with id-1 and type-star 1`] = `
+<button
+  className="ball-selected"
+  id="1-star"
+  onClick={[Function]}
+>
+  1
+</button>
+`;
