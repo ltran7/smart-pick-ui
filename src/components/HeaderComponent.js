@@ -49,16 +49,6 @@ class Header extends Component {
                         </div>
                     </div>
                 </Navbar>
-                {/*<Jumbotron>
-                    <div className="container">
-                        <div className="row row-header">
-                            <div className="col-12 col-sm-6">
-                                <h1>Quick Pick</h1>
-                                <p>Lorem ipsum dolor sit amet, dicta mentitum id vel, mea ut summo legimus. At nibh assentior quo. Eam ut tritani vituperata adversarium. An quo agam possit, mea at soluta mediocrem.</p>
-                            </div>
-                        </div>
-                    </div>
-                </Jumbotron>*/}
             </div>
         );
     }
