@@ -101,7 +101,6 @@ function SmartPick(props) {
     }
 
     const displayProbability = () => {
-        //if (generated) {
             return (
                 <AnimatedProgressProvider
                     valueStart={0}
@@ -113,10 +112,6 @@ function SmartPick(props) {
                     const roundedValue = Math.round(value);
                     return (
                         <CircularProgressbarWithChildren value={value}
-                            //text={`${roundedValue}%`}
-                            /* This is important to include, because if you're fully managing the
-                            animation yourself, you'll want to disable the CSS animation. */
-                            //styles={buildStyles({ pathTransition: "none" })}
                         >
                             <div style={{ fontSize: 16, marginTop: -5, textAlign: "center" }}>
                                 <p>{t("probability_of_success")}</p>
@@ -127,7 +122,6 @@ function SmartPick(props) {
                 }}
                 </AnimatedProgressProvider>
             );
-        //}
     }
 
     return (
@@ -150,7 +144,7 @@ function SmartPick(props) {
                 <div className="col-sm align-self-center selection-container">
                     <div className="selection-numbers-and-stars">
                         <h5><img src='assets/images/ball.png' height="40" width="40" alt='Selected balls'/><span id="selection-numbers" className="selection">{displaySelection(selectedNumbers)}</span></h5>     
-                        <h5><img src='assets/images/star.jpg' height="40" width="40" alt='Selected stars'/><span id="selection-stars" className="selection">{displaySelection(selectedStars)}</span></h5> 
+                        <h5><img src='assets/images/star.jpg' height="40" width="40" alt='Selected stars'/><span id="selection-stars" className="selection">{displaySelection(selectedStars)}</span></h5>
                     </div>
                     <button id="generate-button" className="generate-button" onClick={handleGenerate}>{t("generate")}</button>
                     <button id="reset-button" className="reset-button" onClick={handleReset}>{t("reset")}</button>
